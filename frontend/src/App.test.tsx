@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { App } from "./App";
@@ -36,6 +36,31 @@ describe("core routed workflows", () => {
       screen.queryByText("EXAM-DEMO-02", { exact: false }),
     ).not.toBeInTheDocument();
     expect(screen.getAllByText(/12\/12/).length).toBeGreaterThan(0);
+    expect(screen.getByRole("link", { name: "ดู Quiz" })).toHaveAttribute("href", "/quiz");
+    expect(screen.getByRole("link", { name: "พิมพ์" })).toHaveAttribute("href", "/print/exam");
+  });
+
+  it("shows exactly four primary workspace links in the approved order", async () => {
+    renderRoute("/");
+    await screen.findByRole("heading", { name: "สวัสดี ครูสมชาย" });
+    const links = within(screen.getByRole("navigation", { name: "เมนูหลัก" })).getAllByRole("link");
+    expect(links).toHaveLength(4);
+    expect(links.map((link) => [link.textContent, link.getAttribute("href")])).toEqual([
+      ["หน้าหลัก", "/"],
+      ["การประเมิน", "/assessments"],
+      ["ห้องเรียน", "/dashboard"],
+      ["เอกสาร", "/documents"],
+    ]);
+  });
+
+  it.each([
+    ["/students/STU001", "ห้องเรียน"],
+    ["/exports", "เอกสาร"],
+    ["/quiz", "การประเมิน"],
+  ])("maps %s to its active primary group", async (path, label) => {
+    renderRoute(path);
+    const navigation = await screen.findByRole("navigation", { name: "เมนูหลัก" });
+    expect(within(navigation).getByRole("link", { name: label })).toHaveAttribute("aria-current", "page");
   });
 
   it("shows the two TeacherOS workspaces on home", async () => {
@@ -48,6 +73,7 @@ describe("core routed workflows", () => {
   it("searches the document catalog and parses a prompt into an editable document", async () => {
     renderRoute("/documents");
     expect(await screen.findByRole("heading", { name: "งานเอกสาร" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "ส่งออกเอกสาร" })).toHaveAttribute("href", "/exports");
     fireEvent.change(screen.getByPlaceholderText("ค้นหาแบบฟอร์ม"), { target: { value: "แข่งขัน" } });
     expect(screen.getByText("ชุดเอกสารนำนักเรียนไปแข่งขันนอกสถานที่")).toBeInTheDocument();
     fireEvent.click(screen.getByRole("link", { name: /ชุดเอกสารนำนักเรียนไปแข่งขันนอกสถานที่/ }));
@@ -99,7 +125,7 @@ describe("core routed workflows", () => {
     expect(formatPercentTick(100.00000000000001)).toBe("100%");
     expect(formatPercentTick(30)).toBe("30%");
     expect(
-      await screen.findByRole("link", { name: "ภาพรวมห้อง" }),
+      await screen.findByRole("link", { name: "ห้องเรียน" }),
     ).toHaveAttribute("aria-current", "page");
   });
 

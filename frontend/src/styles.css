@@ -2507,7 +2507,7 @@ p {
 .not-found { display: grid; align-content: center; justify-items: start; gap: 12px; }
 
 @media (max-width: 720px) {
-  .sidebar nav { position: relative; display: flex; height: auto; overflow-x: auto; padding: 6px 10px; border-top: 1px solid var(--border); background: #fff; scrollbar-width: none; }
-  .sidebar nav::-webkit-scrollbar { display: none; }.sidebar nav a, .sidebar nav a.active { min-width: max-content; min-height: 40px; height: 40px; flex-direction: row; padding: 0 10px; font-size: 12px; }.sidebar nav a svg { width: 16px; height: 16px; }.app-main { min-height: calc(100vh - 104px); padding-bottom: 36px; }
+  .sidebar nav { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); height: auto; overflow: visible; padding: 6px 8px; border-top: 1px solid var(--border); background: #fff; }
+  .sidebar nav a, .sidebar nav a.active { min-width: 0; min-height: 40px; height: 40px; flex-direction: row; padding: 0 6px; font-size: 12px; }.sidebar nav a svg { width: 16px; height: 16px; }.app-main { min-height: calc(100vh - 104px); padding-bottom: 36px; }
   .workspace-hero, .document-prompt { align-items: flex-start; flex-direction: column; }.workspace-hero { padding-top: 8px; }.workspace-hero h1 { font-size: 34px; }.workspace-choices, .field-grid, .detail-fields { grid-template-columns: 1fr; }.catalog-controls { align-items: stretch; flex-direction: column; }.catalog-controls select { min-height: 44px; }.prompt-editor { grid-template-columns: 1fr; }.document-row { gap: 10px; }.document-row .document-status { display: none; }.page-header-actions { width: auto; }.editor-actions { position: sticky; bottom: 0; padding: 12px 0; background: var(--canvas); }.editor-actions > * { flex: 1; }.document-state, .process-summary { align-items: flex-start; }
 }

@@ -1,5 +1,4 @@
 import {
-  Download,
   FileText,
   Files,
   GraduationCap,
@@ -7,20 +6,42 @@ import {
   LayoutDashboard,
   UserRound,
 } from "lucide-react";
-import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 
 const navItems = [
-  { to: "/", label: "หน้าหลัก", icon: Home, end: true },
-  { to: "/documents", label: "งานเอกสาร", icon: Files },
-  { to: "/assessments", label: "สร้างข้อสอบ", icon: FileText },
-  { to: "/dashboard", label: "ภาพรวมห้อง", icon: LayoutDashboard },
   {
-    to: "/students/STU001",
-    label: "รายงานรายบุคคล",
-    icon: UserRound,
-    report: true,
+    to: "/",
+    label: "หน้าหลัก",
+    icon: Home,
+    activeOn: (pathname: string) => pathname === "/",
   },
-  { to: "/exports", label: "ส่งออกเอกสาร", icon: Download },
+  {
+    to: "/assessments",
+    label: "การประเมิน",
+    icon: FileText,
+    activeOn: (pathname: string) =>
+      pathname === "/assessments" ||
+      pathname.startsWith("/assessments/") ||
+      pathname === "/quiz",
+  },
+  {
+    to: "/dashboard",
+    label: "ห้องเรียน",
+    icon: LayoutDashboard,
+    activeOn: (pathname: string) =>
+      pathname === "/dashboard" ||
+      pathname.startsWith("/dashboard/") ||
+      pathname.startsWith("/students/"),
+  },
+  {
+    to: "/documents",
+    label: "เอกสาร",
+    icon: Files,
+    activeOn: (pathname: string) =>
+      pathname === "/documents" ||
+      pathname.startsWith("/documents/") ||
+      pathname === "/exports",
+  },
 ];
 
 export function AppShell() {
@@ -35,20 +56,17 @@ export function AppShell() {
         <nav aria-label="เมนูหลัก">
           {navItems.map((item) => {
             const Icon = item.icon;
-            const reportActive =
-              item.report && location.pathname.startsWith("/students/");
+            const groupActive = item.activeOn(location.pathname);
             return (
-              <NavLink
-                end={item.end}
-                className={({ isActive }) =>
-                  isActive || reportActive ? "active" : undefined
-                }
+              <Link
+                aria-current={groupActive ? "page" : undefined}
+                className={groupActive ? "active" : undefined}
                 to={item.to}
                 key={item.to}
               >
                 <Icon aria-hidden="true" />
                 <span className="nav-label">{item.label}</span>
-              </NavLink>
+              </Link>
             );
           })}
         </nav>
