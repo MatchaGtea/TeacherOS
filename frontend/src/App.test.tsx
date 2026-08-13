@@ -25,7 +25,7 @@ describe("core routed workflows", () => {
   });
 
   it("generates a verified fallback exam and exposes its status", async () => {
-    renderRoute("/");
+    renderRoute("/assessments");
     expect(
       await screen.findByRole("heading", { name: "สร้างข้อสอบอัตโนมัติ" }),
     ).toBeInTheDocument();
@@ -36,6 +36,62 @@ describe("core routed workflows", () => {
       screen.queryByText("EXAM-DEMO-02", { exact: false }),
     ).not.toBeInTheDocument();
     expect(screen.getAllByText(/12\/12/).length).toBeGreaterThan(0);
+  });
+
+  it("shows the two TeacherOS workspaces on home", async () => {
+    renderRoute("/");
+    expect(await screen.findByRole("heading", { name: "สวัสดี ครูสมชาย" })).toBeInTheDocument();
+    expect(screen.getAllByRole("link", { name: /งานเอกสาร/ }).some((link) => link.getAttribute("href") === "/documents")).toBe(true);
+    expect(screen.getAllByRole("link", { name: /สร้างข้อสอบ/ }).some((link) => link.getAttribute("href") === "/assessments")).toBe(true);
+  });
+
+  it("searches the document catalog and parses a prompt into an editable document", async () => {
+    renderRoute("/documents");
+    expect(await screen.findByRole("heading", { name: "งานเอกสาร" })).toBeInTheDocument();
+    fireEvent.change(screen.getByPlaceholderText("ค้นหาแบบฟอร์ม"), { target: { value: "แข่งขัน" } });
+    expect(screen.getByText("ชุดเอกสารนำนักเรียนไปแข่งขันนอกสถานที่")).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("link", { name: /ชุดเอกสารนำนักเรียนไปแข่งขันนอกสถานที่/ }));
+    expect(await screen.findByLabelText("อธิบายงานที่ต้องการ")).toBeInTheDocument();
+    expect(screen.getByLabelText("ชื่อกิจกรรม/การแข่งขัน")).toHaveValue("แข่งขันทักษะวิชาการ");
+    expect(screen.getByLabelText("สถานที่")).toHaveValue("จังหวัดเชียงใหม่");
+    expect(screen.getByLabelText("ครูผู้ควบคุม")).toHaveValue("นายสมชาย ใจดี, นางสาวสุดา พร้อมดี");
+    expect(screen.getByLabelText("รายชื่อนักเรียน")).toHaveValue("เด็กหญิงมานี ดีใจ, เด็กชายมานะ ตั้งใจ");
+    expect(screen.getByLabelText("งบประมาณ")).toHaveValue(5000);
+    expect(screen.getByRole("button", { name: "สร้างเอกสาร" })).toBeEnabled();
+    fireEvent.click(screen.getByRole("button", { name: "วิเคราะห์คำขอ" }));
+    expect(screen.getByText(/ความมั่นใจ สูง/)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "สร้างเอกสาร" }));
+    expect(await screen.findByRole("heading", { name: "เอกสารในชุด" })).toBeInTheDocument();
+  });
+
+  it("persists the simulated approval chain through ready state", async () => {
+    renderRoute("/documents/new/general-memo");
+    expect(await screen.findByRole("heading", { name: "บันทึกข้อความทั่วไป" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "สร้างเอกสาร" })).toBeDisabled();
+    expect(screen.getByText(/กรอกข้อมูลที่จำเป็น: เรื่อง/)).toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText("เรื่อง"), { target: { value: "ขออนุมัติทดสอบ" } });
+    expect(screen.getByRole("button", { name: "สร้างเอกสาร" })).toBeEnabled();
+    fireEvent.click(screen.getByRole("button", { name: "สร้างเอกสาร" }));
+    const continueLink = await screen.findByRole("link", { name: "ดำเนินการต่อ" });
+    fireEvent.click(continueLink);
+    fireEvent.click(await screen.findByRole("button", { name: "ส่งตรวจสอบข้อมูล" }));
+    fireEvent.click(await screen.findByRole("button", { name: "จำลองการอนุมัติหัวหน้ากลุ่มสาระ" }));
+    fireEvent.click(await screen.findByRole("button", { name: "จำลองการอนุมัติผู้อำนวยการ" }));
+    fireEvent.click(await screen.findByRole("button", { name: "เตรียมเอกสารให้พร้อมพิมพ์" }));
+    expect(await screen.findByText("เอกสารพร้อมพิมพ์แล้ว")).toBeInTheDocument();
+  });
+
+  it("preserves the request when opening the parser-recommended template", async () => {
+    renderRoute("/documents/new/general-memo");
+    await screen.findByRole("heading", { name: "บันทึกข้อความทั่วไป" });
+    const request = "เรื่อง: แข่งขันหุ่นยนต์, ณ โรงเรียนสาธิต, ระหว่างวันที่ 10–12 ก.ย. 2569";
+    fireEvent.change(screen.getByLabelText("อธิบายงานที่ต้องการ"), { target: { value: request } });
+    fireEvent.click(screen.getByRole("button", { name: "วิเคราะห์คำขอ" }));
+    fireEvent.click(await screen.findByRole("link", { name: "เปิดแบบฟอร์มที่แนะนำ" }));
+    expect(await screen.findByRole("heading", { name: "ชุดเอกสารนำนักเรียนไปแข่งขันนอกสถานที่" })).toBeInTheDocument();
+    expect(screen.getByLabelText("อธิบายงานที่ต้องการ")).toHaveValue(request);
+    expect(screen.getByLabelText("ชื่อกิจกรรม/การแข่งขัน")).toHaveValue("แข่งขันหุ่นยนต์");
+    expect(screen.getByLabelText("สถานที่")).toHaveValue("โรงเรียนสาธิต");
   });
 
   it("keeps chart tick labels human-readable and marks the active route", async () => {

@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-BrPzxVrZ.js";var t=e();function n({children:e,kind:n=`primary`,className:r=``,type:i=`button`,...a}){return(0,t.jsx)(`button`,{type:i,className:`button ${n} ${r}`.trim(),...a,children:e})}export{n as t};

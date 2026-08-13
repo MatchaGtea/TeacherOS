@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
-.PHONY: setup dev test build
+.PHONY: setup dev test build build-pages
 
 setup:
 	python3 -m venv backend/.venv
@@ -20,3 +20,8 @@ test:
 build:
 	cd frontend && npm run build
 
+build-pages:
+	mkdir -p docs/assets
+	find docs/assets -mindepth 1 -maxdepth 1 -type f -delete
+	cd frontend && VITE_BASE_PATH=/TeacherOS/ VITE_STATIC_DEMO=true npm run build -- --outDir ../docs --emptyOutDir false
+	touch docs/.nojekyll

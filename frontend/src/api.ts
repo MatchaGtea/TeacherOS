@@ -7,6 +7,7 @@ import {
 import type { Analytics, ApiResult, Exam, QuizResult, Report } from "./types";
 
 const base = (import.meta.env.VITE_API_BASE_URL || "/api").replace(/\/$/, "");
+const staticDemo = import.meta.env.VITE_STATIC_DEMO === "true";
 const fallbackMessage =
   "Demo data · ใช้ข้อมูลตัวอย่างที่ตรวจสอบแล้ว";
 
@@ -22,6 +23,8 @@ async function safe<T>(
   fallback: T,
   init?: RequestInit,
 ): Promise<ApiResult<T>> {
+  if (staticDemo)
+    return { data: fallback, source: "fallback", message: fallbackMessage };
   try {
     return { data: await request<T>(path, init), source: "live" };
   } catch {
@@ -77,6 +80,8 @@ export const api = {
       },
     ),
   html: async (path: string): Promise<ApiResult<string>> => {
+    if (staticDemo)
+      return { data: "", source: "fallback", message: fallbackMessage };
     try {
       const response = await fetch(`${base}${path}`);
       if (!response.ok) throw new Error(response.statusText);

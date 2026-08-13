@@ -1,14 +1,18 @@
 import {
   Download,
   FileText,
+  Files,
   GraduationCap,
+  Home,
   LayoutDashboard,
   UserRound,
 } from "lucide-react";
 import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 
 const navItems = [
-  { to: "/", label: "สร้างข้อสอบ", icon: FileText, end: true },
+  { to: "/", label: "หน้าหลัก", icon: Home, end: true },
+  { to: "/documents", label: "งานเอกสาร", icon: Files },
+  { to: "/assessments", label: "สร้างข้อสอบ", icon: FileText },
   { to: "/dashboard", label: "ภาพรวมห้อง", icon: LayoutDashboard },
   {
     to: "/students/STU001",
