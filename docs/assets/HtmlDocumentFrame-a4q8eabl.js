@@ -1,0 +1,1 @@
+import{c as e}from"./api-e-KZljD1.js";var t=e();function n({html:e,title:n}){return(0,t.jsx)(`iframe`,{className:`document-frame`,title:n,srcDoc:e})}export{n as t};

@@ -3,7 +3,10 @@ import { MemoryRouter } from "react-router-dom";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { App } from "./App";
 import { fixtureAnalytics } from "./fixtures";
-import { normalizeStatusDistribution } from "./pages/DashboardPage";
+import {
+  formatPercentTick,
+  normalizeStatusDistribution,
+} from "./pages/DashboardPage";
 
 function renderRoute(path: string) {
   return render(
@@ -26,12 +29,22 @@ describe("core routed workflows", () => {
     expect(
       await screen.findByRole("heading", { name: "สร้างข้อสอบอัตโนมัติ" }),
     ).toBeInTheDocument();
+    expect(await screen.findByText("Demo data")).toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: /สร้างใหม่ด้วย AI/ }));
     expect(await screen.findByText(/AI ยังไม่พร้อม/)).toBeInTheDocument();
     expect(
       screen.queryByText("EXAM-DEMO-02", { exact: false }),
     ).not.toBeInTheDocument();
     expect(screen.getAllByText(/12\/12/).length).toBeGreaterThan(0);
+  });
+
+  it("keeps chart tick labels human-readable and marks the active route", async () => {
+    renderRoute("/dashboard");
+    expect(formatPercentTick(100.00000000000001)).toBe("100%");
+    expect(formatPercentTick(30)).toBe("30%");
+    expect(
+      await screen.findByRole("link", { name: "ภาพรวมห้อง" }),
+    ).toHaveAttribute("aria-current", "page");
   });
 
   it("validates quiz identity/completion, scores it, and allows retry", async () => {

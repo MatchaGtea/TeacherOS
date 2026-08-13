@@ -12,6 +12,7 @@ import {
 } from "recharts";
 import { api } from "../api";
 import { AsyncStatus } from "../components/AsyncStatus";
+import { MetricCard, PageHeader } from "../components/DesignSystem";
 import { GrowthIndicator } from "../components/GrowthIndicator";
 import { fixtureAnalytics, nodes } from "../fixtures";
 import type { Analytics, Mastery } from "../types";
@@ -39,6 +40,10 @@ export function normalizeStatusDistribution(counts: StatusDistribution) {
     developing: (counts.developing / studentCount) * 100,
     critical: (counts.critical / studentCount) * 100,
   };
+}
+
+export function formatPercentTick(value: number | string) {
+  return `${Math.round(Number(value))}%`;
 }
 
 export default function DashboardPage() {
@@ -74,19 +79,45 @@ export default function DashboardPage() {
   );
   return (
     <>
-      <header className="rowhead">
-        <div>
-          <h1>ภาพรวมห้อง {data.room}</h1>
-          <p>{data.exam_title}</p>
-        </div>
-        <select aria-label="เลือกห้อง" defaultValue="ม.3/2">
-          <option>ม.3/2</option>
-        </select>
-      </header>
+      <PageHeader
+        className="rowhead"
+        title={`ภาพรวมห้อง ${data.room}`}
+        description={data.exam_title}
+        actions={
+          <select aria-label="เลือกห้อง" defaultValue="ม.3/2">
+            <option>ม.3/2</option>
+          </select>
+        }
+      />
       <AsyncStatus
         message={message}
         kind={message?.includes("ตัวอย่าง") ? "warning" : "info"}
       />
+      <section className="metric-band" aria-label="ตัวชี้วัดภาพรวมห้อง">
+        <MetricCard
+          label="ค่าเฉลี่ยห้อง"
+          value={`${data.class_average}%`}
+          detail={`ครั้งก่อน ${data.previous_average}%`}
+        />
+        <MetricCard
+          label="การเติบโต"
+          value={`+${(data.class_average - data.previous_average).toFixed(1)} จุด`}
+          detail="ก่อนเรียน → หลังเรียน"
+          tone="green"
+        />
+        <MetricCard
+          label="ควรติดตาม"
+          value={`${data.flagged_students.length} คน`}
+          detail="จากทั้งหมด 30 คน"
+          tone="amber"
+        />
+        <MetricCard
+          label="จุดเน้นถัดไป"
+          value={data.insight.focus_node_id}
+          detail={data.insight.headline.replace("ควรเร่งเสริม ", "")}
+          tone="red"
+        />
+      </section>
       <div className="dashboard-grid">
         <section>
           <div className="heatmap-title">
@@ -134,6 +165,9 @@ export default function DashboardPage() {
                         className={`heat ${item.status}`}
                         title={`${item.node_id}: ${statusLabel[item.status]} ${item.percentage}%`}
                       >
+                        <span className="heat-value" aria-hidden="true">
+                          {Math.round(item.percentage)}%
+                        </span>
                         <span className="heat-short" aria-hidden="true">
                           {statusShort[item.status]}
                         </span>
@@ -185,7 +219,7 @@ export default function DashboardPage() {
                   <XAxis
                     type="number"
                     domain={[0, 100]}
-                    tickFormatter={(value) => `${value}%`}
+                    tickFormatter={formatPercentTick}
                   />
                   <YAxis dataKey="node" type="category" width={38} />
                   <Tooltip

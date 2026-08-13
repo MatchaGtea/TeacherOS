@@ -11,6 +11,7 @@ import {
 } from "recharts";
 import { api } from "../api";
 import { AsyncStatus } from "../components/AsyncStatus";
+import { PageHeader } from "../components/DesignSystem";
 import { GrowthIndicator } from "../components/GrowthIndicator";
 import { fixtureReport, nodes, students } from "../fixtures";
 import type { Report } from "../types";
@@ -82,29 +83,29 @@ export default function StudentReportPage() {
       ];
   return (
     <>
-      <header className="rowhead">
-        <div>
-          <h1>รายงานพัฒนาผู้เรียนรายบุคคล</h1>
-          <p>
-            {report.student.name} &nbsp;•&nbsp; เลขที่{" "}
-            {report.student.student_number} &nbsp;•&nbsp; {report.student.room}
-          </p>
-        </div>
-        <select
-          aria-label="เลือกนักเรียน"
-          value={id}
-          onChange={(event) => navigate(`/students/${event.target.value}`)}
-        >
-          {students.map((student) => (
-            <option value={student.id} key={student.id}>
-              {student.student_number}. {student.name}
-            </option>
-          ))}
-        </select>
-        <Link className="button outline" to={`/students/${id}/print`}>
-          <Download aria-hidden="true" /> ดาวน์โหลด / พิมพ์ PDF
-        </Link>
-      </header>
+      <PageHeader
+        className="rowhead"
+        title="รายงานพัฒนาผู้เรียนรายบุคคล"
+        description={`${report.student.name} · เลขที่ ${report.student.student_number} · ${report.student.room}`}
+        actions={
+          <>
+            <select
+              aria-label="เลือกนักเรียน"
+              value={id}
+              onChange={(event) => navigate(`/students/${event.target.value}`)}
+            >
+              {students.map((student) => (
+                <option value={student.id} key={student.id}>
+                  {student.student_number}. {student.name}
+                </option>
+              ))}
+            </select>
+            <Link className="button outline" to={`/students/${id}/print`}>
+              <Download aria-hidden="true" /> ดาวน์โหลด / พิมพ์ PDF
+            </Link>
+          </>
+        }
+      />
       <AsyncStatus
         message={message}
         kind={message?.includes("ตัวอย่าง") ? "warning" : "info"}

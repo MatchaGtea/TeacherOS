@@ -1,6 +1,7 @@
 import { FileSpreadsheet, FileText } from "lucide-react";
 import { Link } from "react-router-dom";
 import { apiUrls } from "../api";
+import { PageHeader } from "../components/DesignSystem";
 import { fixtureAnalytics, fixtureReport, students } from "../fixtures";
 
 const achievementGroups = [
@@ -16,12 +17,10 @@ export default function ExportsPage() {
     .map((student) => fixtureReport(student.id));
   return (
     <>
-      <header>
-        <div>
-          <h1>ส่งออกเอกสารครู</h1>
-          <p>ส่งออกเอกสารสำหรับงานประเมินและหลักฐาน เพื่อใช้รายงานผล</p>
-        </div>
-      </header>
+      <PageHeader
+        title="ส่งออกเอกสารครู"
+        description="ส่งออกเอกสารสำหรับงานประเมินและหลักฐาน เพื่อใช้รายงานผล"
+      />
       <section className="export-section">
         <div className="number">1</div>
         <div>

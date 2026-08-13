@@ -8,7 +8,7 @@ import type { Analytics, ApiResult, Exam, QuizResult, Report } from "./types";
 
 const base = (import.meta.env.VITE_API_BASE_URL || "/api").replace(/\/$/, "");
 const fallbackMessage =
-  "เชื่อมต่อเซิร์ฟเวอร์ไม่ได้ กำลังแสดงข้อมูลตัวอย่างที่ตรวจสอบแล้ว";
+  "Demo data · ใช้ข้อมูลตัวอย่างที่ตรวจสอบแล้ว";
 
 async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const response = await fetch(`${base}${path}`, init);

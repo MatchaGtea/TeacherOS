@@ -21,7 +21,8 @@ To enable the optional “สร้างใหม่ด้วย AI” flow, co
 
 The repository includes a static GitHub Pages snapshot under `/docs`. The public demo uses the same verified fixture data and static export files, so it works without a running FastAPI server. The AI button falls back to the fixture set on Pages unless an API-backed deployment is configured separately. Pages is configured to serve `main:/docs` directly.
 
-After the first successful workflow run, the site is available at `https://<your-github-user>.github.io/TeacherOS/`.
+When GitHub Pages is configured for `main:/docs`, the site is available at
+`https://<your-github-user>.github.io/TeacherOS/`.
 
 ## Verify
 

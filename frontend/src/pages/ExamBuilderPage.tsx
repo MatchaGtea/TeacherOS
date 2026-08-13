@@ -8,6 +8,7 @@ import {
 import { Link } from "react-router-dom";
 import { AsyncStatus } from "../components/AsyncStatus";
 import { Button } from "../components/Button";
+import { PageHeader, SegmentedControl } from "../components/DesignSystem";
 import { ExamPaper } from "../components/ExamPaper";
 import { useExam } from "../context/ExamContext";
 import { useState } from "react";
@@ -30,12 +31,10 @@ export default function ExamBuilderPage() {
         : "ชุดมาตรฐาน";
   return (
     <>
-      <header>
-        <div>
-          <h1>สร้างข้อสอบอัตโนมัติ</h1>
-          <p>คณิตศาสตร์ ม.3 &nbsp;•&nbsp; สมการกำลังสองตัวแปรเดียว</p>
-        </div>
-      </header>
+      <PageHeader
+        title="สร้างข้อสอบอัตโนมัติ"
+        description="คณิตศาสตร์ ม.3 · สมการกำลังสองตัวแปรเดียว"
+      />
       <AsyncStatus
         message={loading ? "กำลังตรวจสอบชุดข้อสอบ…" : statusMessage}
         kind={statusMessage ? "warning" : "info"}
@@ -91,13 +90,13 @@ export default function ExamBuilderPage() {
           <fieldset className="extra-options">
             <legend>ตัวเลือกเพิ่มเติม</legend>
             <label>
-              <input type="checkbox" defaultChecked /> สลับตัวเลือกอัตโนมัติ
+              <input type="checkbox" defaultChecked /> สลับตัวเลือก
             </label>
             <label>
-              <input type="checkbox" defaultChecked /> โชว์เฉลยหลังทำเสร็จ
+              <input type="checkbox" defaultChecked /> แสดงเฉลย
             </label>
             <label>
-              กำหนดเวลา (นาที)
+              เวลา (นาที)
               <input
                 className="time-input"
                 type="number"
@@ -152,24 +151,15 @@ export default function ExamBuilderPage() {
       ) : null}
       <div className="two-col">
         <section className="panel exam-list">
-          <div className="tabs" role="tablist">
-            <button
-              role="tab"
-              aria-selected={tab === "online"}
-              className={tab === "online" ? "active" : ""}
-              onClick={() => setTab("online")}
-            >
-              Online Quiz
-            </button>
-            <button
-              role="tab"
-              aria-selected={tab === "print"}
-              className={tab === "print" ? "active" : ""}
-              onClick={() => setTab("print")}
-            >
-              กระดาษข้อสอบ
-            </button>
-          </div>
+          <SegmentedControl
+            label="รูปแบบการดูข้อสอบ"
+            value={tab}
+            onChange={(value) => setTab(value as "online" | "print")}
+            options={[
+              { value: "online", label: "Online Quiz" },
+              { value: "print", label: "กระดาษข้อสอบ" },
+            ]}
+          />
           {tab === "online" ? (
             exam.questions.map((question, index) => (
               <article className="question" key={question.id}>

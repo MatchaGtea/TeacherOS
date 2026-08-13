@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { api } from "../api";
 import { AsyncStatus } from "../components/AsyncStatus";
 import { Button } from "../components/Button";
+import { PageHeader } from "../components/DesignSystem";
 import { useExam } from "../context/ExamContext";
 import { nodes } from "../fixtures";
 import type { QuizResult } from "../types";
@@ -37,14 +38,10 @@ export default function QuizPage() {
   };
   return (
     <>
-      <header>
-        <div>
-          <h1>Online Quiz</h1>
-          <p>
-            {exam.title} · {exam.questions.length} ข้อ
-          </p>
-        </div>
-      </header>
+      <PageHeader
+        title="Online Quiz"
+        description={`${exam.title} · ${exam.questions.length} ข้อ`}
+      />
       <AsyncStatus
         message={loading ? "กำลังโหลดข้อสอบ…" : statusMessage}
         kind={statusMessage ? "warning" : "info"}
@@ -139,9 +136,11 @@ export default function QuizPage() {
             </fieldset>
           ))}
           <AsyncStatus message={submitMessage} kind="warning" />
-          <Button type="submit" disabled={!valid}>
-            {submitting ? "กำลังตรวจคำตอบ…" : "ส่งคำตอบ"}
-          </Button>
+          <div className="sticky-mobile-action">
+            <Button type="submit" disabled={!valid}>
+              {submitting ? "กำลังตรวจคำตอบ…" : "ส่งคำตอบ"}
+            </Button>
+          </div>
         </form>
       )}
     </>
