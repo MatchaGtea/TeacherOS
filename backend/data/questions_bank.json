@@ -1,0 +1,157 @@
+{
+  "exam": {
+    "id": "EXAM-DEMO-02",
+    "title": "สอบท้ายหน่วย ครั้งที่ 2",
+    "subject": "คณิตศาสตร์",
+    "grade": "ม.3",
+    "topic": "สมการกำลังสองตัวแปรเดียว",
+    "attempt_number": 2,
+    "duration_minutes": 40
+  },
+  "questions": [
+    {
+      "id": "Q01",
+      "stem": "สมการ x² − 5x + 6 = 0 มีคำตอบตรงกับข้อใด",
+      "equation": "x**2 - 5*x + 6",
+      "choices": [
+        {"id":"A","text":"x = 2 หรือ x = 3","value":["2","3"],"root_cause_node":null,"explanation":"เพราะ (x − 2)(x − 3) = 0"},
+        {"id":"B","text":"x = −2 หรือ x = −3","value":["-2","-3"],"root_cause_node":"N01","explanation":"สลับเครื่องหมายของคำตอบทั้งสองค่า"},
+        {"id":"C","text":"x = 1 หรือ x = 6","value":["1","6"],"root_cause_node":"N03","explanation":"เลือกคู่จำนวนที่คูณกันได้ 6 แต่ผลบวกไม่ตรงสัมประสิทธิ์"},
+        {"id":"D","text":"x = 0 หรือ x = 5","value":["0","5"],"root_cause_node":"N04","explanation":"ใช้ผลบวกของสัมประสิทธิ์แทนสมบัติผลคูณเป็นศูนย์"}
+      ],
+      "correct_choice_id":"A","knowledge_node_id":"N01","difficulty":"easy","solution_explanation":"แยกตัวประกอบเป็น (x − 2)(x − 3) = 0 จึงได้ x = 2 หรือ x = 3"
+    },
+    {
+      "id": "Q02",
+      "stem": "เมื่อแก้สมการ x² − x − 6 = 0 ควรได้ค่าของ x เป็นคู่ใด",
+      "equation": "x**2 - x - 6",
+      "choices": [
+        {"id":"A","text":"x = −2 หรือ x = 3","value":["-2","3"],"root_cause_node":null,"explanation":"เพราะ (x + 2)(x − 3) = 0"},
+        {"id":"B","text":"x = 2 หรือ x = −3","value":["2","-3"],"root_cause_node":"N01","explanation":"อ่านเครื่องหมายจากตัวประกอบกลับด้าน"},
+        {"id":"C","text":"x = −1 หรือ x = 6","value":["-1","6"],"root_cause_node":"N03","explanation":"เลือกคู่ตัวประกอบที่มีผลคูณผิดเครื่องหมาย"},
+        {"id":"D","text":"x = 6","value":["6"],"root_cause_node":"N04","explanation":"พิจารณาคำตอบเพียงค่าหนึ่ง"}
+      ],
+      "correct_choice_id":"A","knowledge_node_id":"N01","difficulty":"easy","solution_explanation":"แยกตัวประกอบเป็น (x + 2)(x − 3) = 0 จึงได้ x = −2 หรือ x = 3"
+    },
+    {
+      "id": "Q03",
+      "stem": "จาก x(x + 1) = 12 เมื่อจัดรูปและแก้สมการแล้ว x มีค่าเท่าใด",
+      "equation": "x**2 + x - 12",
+      "choices": [
+        {"id":"A","text":"x = −4 หรือ x = 3","value":["-4","3"],"root_cause_node":null,"explanation":"จัดรูปเป็น x² + x − 12 = 0 แล้วแยกตัวประกอบ"},
+        {"id":"B","text":"x = 4 หรือ x = −3","value":["4","-3"],"root_cause_node":"N01","explanation":"สลับเครื่องหมายเมื่ออ่านคำตอบจากตัวประกอบ"},
+        {"id":"C","text":"x = −6 หรือ x = 2","value":["-6","2"],"root_cause_node":"N03","explanation":"เลือกคู่จำนวนที่ผลคูณถูกแต่ผลบวกไม่ใช่ 1"},
+        {"id":"D","text":"x = −12","value":["-12"],"root_cause_node":"N02","explanation":"ย้ายข้างโดยไม่แจกแจง x ให้ครบ"}
+      ],
+      "correct_choice_id":"A","knowledge_node_id":"N02","difficulty":"medium","solution_explanation":"แจกแจงได้ x² + x − 12 = 0 และแยกเป็น (x + 4)(x − 3) = 0"
+    },
+    {
+      "id": "Q04",
+      "stem": "สมการ x² − 9 = 0 แยกตัวประกอบและหาคำตอบได้ตรงกับข้อใด",
+      "equation": "x**2 - 9",
+      "choices": [
+        {"id":"A","text":"x = −3 หรือ x = 3","value":["-3","3"],"root_cause_node":null,"explanation":"ใช้ผลต่างกำลังสอง (x − 3)(x + 3)"},
+        {"id":"B","text":"x = 3 เท่านั้น","value":["3"],"root_cause_node":"N01","explanation":"ละเลยรากที่เป็นจำนวนลบ"},
+        {"id":"C","text":"x = −9 หรือ x = 1","value":["-9","1"],"root_cause_node":"N03","explanation":"แยกตัวประกอบผลต่างกำลังสองไม่ถูกต้อง"},
+        {"id":"D","text":"x = 0 หรือ x = 9","value":["0","9"],"root_cause_node":"N02","explanation":"จัดรูปพหุนามและค่าคงตัวคลาดเคลื่อน"}
+      ],
+      "correct_choice_id":"A","knowledge_node_id":"N02","difficulty":"easy","solution_explanation":"x² − 9 = (x − 3)(x + 3) จึงได้ x = −3 หรือ x = 3"
+    },
+    {
+      "id": "Q05",
+      "stem": "ข้อใดเป็นคำตอบของสมการ x² − 7x + 12 = 0",
+      "equation": "x**2 - 7*x + 12",
+      "choices": [
+        {"id":"A","text":"x = 3 หรือ x = 4","value":["3","4"],"root_cause_node":null,"explanation":"เพราะ (x − 3)(x − 4) = 0"},
+        {"id":"B","text":"x = −3 หรือ x = −4","value":["-3","-4"],"root_cause_node":"N01","explanation":"สลับเครื่องหมายของราก"},
+        {"id":"C","text":"x = 2 หรือ x = 6","value":["2","6"],"root_cause_node":"N03","explanation":"คู่จำนวนคูณกันได้ 12 แต่ผลบวกไม่เท่ากับ 7"},
+        {"id":"D","text":"x = 0 หรือ x = 7","value":["0","7"],"root_cause_node":"N04","explanation":"ตั้งแต่ละพจน์ให้เป็นศูนย์แทนแต่ละตัวประกอบ"}
+      ],
+      "correct_choice_id":"A","knowledge_node_id":"N03","difficulty":"medium","solution_explanation":"หา 3 และ 4 ซึ่งคูณกันได้ 12 และบวกกันได้ 7 แล้วใช้สมบัติผลคูณเป็นศูนย์"
+    },
+    {
+      "id": "Q06",
+      "stem": "หากแยกตัวประกอบสมการ x² + 5x + 6 = 0 ได้ถูกต้อง คำตอบคือข้อใด",
+      "equation": "x**2 + 5*x + 6",
+      "choices": [
+        {"id":"A","text":"x = −3 หรือ x = −2","value":["-3","-2"],"root_cause_node":null,"explanation":"เพราะ (x + 3)(x + 2) = 0"},
+        {"id":"B","text":"x = 3 หรือ x = 2","value":["3","2"],"root_cause_node":"N01","explanation":"อ่านเครื่องหมายของรากจากตัวประกอบผิด"},
+        {"id":"C","text":"x = −6 หรือ x = 1","value":["-6","1"],"root_cause_node":"N03","explanation":"เลือกคู่จำนวนที่ให้ผลคูณ −6"},
+        {"id":"D","text":"x = −5 หรือ x = 0","value":["-5","0"],"root_cause_node":"N04","explanation":"ตั้งพจน์แยกกันเป็นศูนย์โดยไม่ได้แยกตัวประกอบ"}
+      ],
+      "correct_choice_id":"A","knowledge_node_id":"N03","difficulty":"easy","solution_explanation":"แยกเป็น (x + 3)(x + 2) = 0 จึงได้ x = −3 หรือ x = −2"
+    },
+    {
+      "id": "Q07",
+      "stem": "เมื่อ (x + 2)(x − 6) = 0 ค่าของ x ที่เป็นไปได้คือข้อใด",
+      "equation": "x**2 - 4*x - 12",
+      "choices": [
+        {"id":"A","text":"x = −2 หรือ x = 6","value":["-2","6"],"root_cause_node":null,"explanation":"ให้ x + 2 = 0 หรือ x − 6 = 0"},
+        {"id":"B","text":"x = 2 หรือ x = −6","value":["2","-6"],"root_cause_node":"N01","explanation":"ย้ายข้างแล้วสลับเครื่องหมายผิด"},
+        {"id":"C","text":"x = −3 หรือ x = 4","value":["-3","4"],"root_cause_node":"N03","explanation":"จับคู่ตัวประกอบของ −12 ไม่สอดคล้องกับพจน์กลาง"},
+        {"id":"D","text":"x = 0 หรือ x = 4","value":["0","4"],"root_cause_node":"N04","explanation":"ไม่ได้ตั้งตัวประกอบแต่ละตัวให้เท่ากับศูนย์"}
+      ],
+      "correct_choice_id":"A","knowledge_node_id":"N04","difficulty":"easy","solution_explanation":"จากสมบัติผลคูณเป็นศูนย์ ได้ x + 2 = 0 หรือ x − 6 = 0"
+    },
+    {
+      "id": "Q08",
+      "stem": "สมการ x² − 2x − 15 = 0 มีรากของสมการเป็นคู่ใด",
+      "equation": "x**2 - 2*x - 15",
+      "choices": [
+        {"id":"A","text":"x = −3 หรือ x = 5","value":["-3","5"],"root_cause_node":null,"explanation":"เพราะ (x + 3)(x − 5) = 0"},
+        {"id":"B","text":"x = 3 หรือ x = −5","value":["3","-5"],"root_cause_node":"N01","explanation":"อ่านเครื่องหมายจากตัวประกอบกลับด้าน"},
+        {"id":"C","text":"x = −1 หรือ x = 15","value":["-1","15"],"root_cause_node":"N03","explanation":"เลือกคู่ตัวประกอบของ 15 โดยไม่ตรวจผลบวก"},
+        {"id":"D","text":"x = 0 หรือ x = 2","value":["0","2"],"root_cause_node":"N04","explanation":"ใช้เฉพาะพจน์ x² − 2x และละเลยค่าคงตัว"}
+      ],
+      "correct_choice_id":"A","knowledge_node_id":"N04","difficulty":"medium","solution_explanation":"แยกเป็น (x + 3)(x − 5) = 0 แล้วใช้สมบัติผลคูณเป็นศูนย์"
+    },
+    {
+      "id": "Q09",
+      "stem": "รากทั้งสองของสมการ x² − 16 = 0 คือข้อใด",
+      "equation": "x**2 - 16",
+      "choices": [
+        {"id":"A","text":"x = −4 หรือ x = 4","value":["-4","4"],"root_cause_node":null,"explanation":"เพราะ x² − 16 = (x − 4)(x + 4)"},
+        {"id":"B","text":"x = 4 เท่านั้น","value":["4"],"root_cause_node":"N01","explanation":"ละเลยรากลบของสมการ"},
+        {"id":"C","text":"x = −8 หรือ x = 2","value":["-8","2"],"root_cause_node":"N03","explanation":"แยกผลต่างกำลังสองด้วยคู่จำนวนผิด"},
+        {"id":"D","text":"x = 0 หรือ x = 16","value":["0","16"],"root_cause_node":"N04","explanation":"ไม่ใช้ตัวประกอบทั้งสองของผลต่างกำลังสอง"}
+      ],
+      "correct_choice_id":"A","knowledge_node_id":"N05","difficulty":"easy","solution_explanation":"ใช้ผลต่างกำลังสองแล้วตั้ง x − 4 = 0 หรือ x + 4 = 0"
+    },
+    {
+      "id": "Q10",
+      "stem": "คำตอบของสมการ x² + 2x − 8 = 0 ตรงกับข้อใด",
+      "equation": "x**2 + 2*x - 8",
+      "choices": [
+        {"id":"A","text":"x = −4 หรือ x = 2","value":["-4","2"],"root_cause_node":null,"explanation":"เพราะ (x + 4)(x − 2) = 0"},
+        {"id":"B","text":"x = 4 หรือ x = −2","value":["4","-2"],"root_cause_node":"N01","explanation":"สลับเครื่องหมายของคำตอบ"},
+        {"id":"C","text":"x = −1 หรือ x = 8","value":["-1","8"],"root_cause_node":"N03","explanation":"เลือกคู่ตัวประกอบที่ผลบวกไม่เท่ากับ 2"},
+        {"id":"D","text":"x = 0 หรือ x = −2","value":["0","-2"],"root_cause_node":"N04","explanation":"ดึง x เป็นตัวร่วมทั้งที่มีค่าคงตัว"}
+      ],
+      "correct_choice_id":"A","knowledge_node_id":"N05","difficulty":"medium","solution_explanation":"แยกเป็น (x + 4)(x − 2) = 0 จึงได้ x = −4 หรือ x = 2"
+    },
+    {
+      "id": "Q11",
+      "stem": "สมการ x² − 10x + 25 = 0 มีคำตอบอย่างไร",
+      "equation": "x**2 - 10*x + 25",
+      "choices": [
+        {"id":"A","text":"x = 5","value":["5"],"root_cause_node":null,"explanation":"เป็นกำลังสองสมบูรณ์ (x − 5)²"},
+        {"id":"B","text":"x = −5","value":["-5"],"root_cause_node":"N01","explanation":"อ่านเครื่องหมายจาก (x − 5) ผิด"},
+        {"id":"C","text":"x = 25","value":["25"],"root_cause_node":"N03","explanation":"ใช้ค่าคงตัวเป็นรากโดยไม่แยกตัวประกอบ"},
+        {"id":"D","text":"x = 0 หรือ x = 10","value":["0","10"],"root_cause_node":"N04","explanation":"แยกพจน์แทนการใช้กำลังสองสมบูรณ์"}
+      ],
+      "correct_choice_id":"A","knowledge_node_id":"N05","difficulty":"hard","solution_explanation":"เขียนเป็น (x − 5)² = 0 จึงมีรากซ้ำ x = 5"
+    },
+    {
+      "id": "Q12",
+      "stem": "เมื่อแก้สมการ 2x² − 8x = 0 ค่าของ x คือข้อใด",
+      "equation": "2*x**2 - 8*x",
+      "choices": [
+        {"id":"A","text":"x = 0 หรือ x = 4","value":["0","4"],"root_cause_node":null,"explanation":"ดึง 2x เป็นตัวร่วมได้ 2x(x − 4)"},
+        {"id":"B","text":"x = 0 หรือ x = −4","value":["0","-4"],"root_cause_node":"N01","explanation":"ย้ายข้างจาก x − 4 = 0 ผิดเครื่องหมาย"},
+        {"id":"C","text":"x = 2 หรือ x = 4","value":["2","4"],"root_cause_node":"N03","explanation":"ดึงตัวร่วมไม่ครบและเพิ่มคำตอบที่ไม่ใช่ราก"},
+        {"id":"D","text":"x = 4 เท่านั้น","value":["4"],"root_cause_node":"N04","explanation":"ละเลยกรณีที่ตัวประกอบ 2x เท่ากับศูนย์"}
+      ],
+      "correct_choice_id":"A","knowledge_node_id":"N05","difficulty":"medium","solution_explanation":"ดึงตัวร่วมเป็น 2x(x − 4) = 0 จึงได้ x = 0 หรือ x = 4"
+    }
+  ]
+}

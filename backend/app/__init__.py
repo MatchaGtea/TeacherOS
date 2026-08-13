@@ -1,0 +1,2 @@
+"""TeacherOS FastAPI application."""
+
