@@ -1,0 +1,1 @@
+import{c as e}from"./api-T5DnG7az.js";var t=e();function n({message:e,kind:n=`info`}){return e?(0,t.jsx)(`p`,{className:`async-status ${n}`,role:n===`error`?`alert`:`status`,children:e}):null}export{n as t};
