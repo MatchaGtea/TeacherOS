@@ -30,10 +30,10 @@ export default function PaCarPage() {
     <main className="document-route">
       <header className="document-toolbar no-print">
         <div>
-          <h1>สรุปหลักฐาน PA / CAR</h1>
-          <p>เอกสารพร้อมพิมพ์จากข้อมูลชั้น ม.3/2</p>
+          <h1>แฟ้มหลักฐาน PA / CAR</h1>
+          <p>แฟ้มหลักฐานการประเมินพร้อมพิมพ์จากข้อมูลชั้น ม.3/2</p>
         </div>
-        <Link to="/exports">กลับหน้าส่งออก</Link>
+        <Link to="/evidence">กลับศูนย์หลักฐานการประเมิน</Link>
         <a
           className="button outline"
           href={apiUrls.paCar}

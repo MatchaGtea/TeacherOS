@@ -44,6 +44,7 @@ export function App() {
             <Route path="/quiz" element={<QuizPage />} />
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/students/:id" element={<StudentReportPage />} />
+            <Route path="/evidence" element={<ExportsPage />} />
             <Route path="/exports" element={<ExportsPage />} />
           </Route>
           <Route path="/print/exam" element={<PrintExamPage />} />

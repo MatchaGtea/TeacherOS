@@ -24,6 +24,18 @@ const navItems = [
       pathname === "/quiz",
   },
   {
+    to: "/evidence",
+    label: "หลักฐาน",
+    icon: Files,
+    activeOn: (pathname: string) =>
+      pathname === "/evidence" ||
+      pathname.startsWith("/evidence/") ||
+      pathname === "/exports" ||
+      pathname.startsWith("/exports/") ||
+      pathname === "/documents" ||
+      pathname.startsWith("/documents/"),
+  },
+  {
     to: "/dashboard",
     label: "ห้องเรียน",
     icon: LayoutDashboard,
@@ -31,15 +43,6 @@ const navItems = [
       pathname === "/dashboard" ||
       pathname.startsWith("/dashboard/") ||
       pathname.startsWith("/students/"),
-  },
-  {
-    to: "/documents",
-    label: "เอกสาร",
-    icon: Files,
-    activeOn: (pathname: string) =>
-      pathname === "/documents" ||
-      pathname.startsWith("/documents/") ||
-      pathname === "/exports",
   },
 ];
 

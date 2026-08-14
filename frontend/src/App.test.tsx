@@ -42,20 +42,21 @@ describe("core routed workflows", () => {
 
   it("shows exactly four primary workspace links in the approved order", async () => {
     renderRoute("/");
-    await screen.findByRole("heading", { name: "สวัสดี ครูสมชาย" });
+    await screen.findByRole("heading", { name: "หลักฐานการประเมิน พร้อมใช้" });
     const links = within(screen.getByRole("navigation", { name: "เมนูหลัก" })).getAllByRole("link");
     expect(links).toHaveLength(4);
     expect(links.map((link) => [link.textContent, link.getAttribute("href")])).toEqual([
       ["หน้าหลัก", "/"],
       ["การประเมิน", "/assessments"],
+      ["หลักฐาน", "/evidence"],
       ["ห้องเรียน", "/dashboard"],
-      ["เอกสาร", "/documents"],
     ]);
   });
 
   it.each([
     ["/students/STU001", "ห้องเรียน"],
-    ["/exports", "เอกสาร"],
+    ["/exports", "หลักฐาน"],
+    ["/documents", "หลักฐาน"],
     ["/quiz", "การประเมิน"],
   ])("maps %s to its active primary group", async (path, label) => {
     renderRoute(path);
@@ -63,17 +64,18 @@ describe("core routed workflows", () => {
     expect(within(navigation).getByRole("link", { name: label })).toHaveAttribute("aria-current", "page");
   });
 
-  it("shows the two TeacherOS workspaces on home", async () => {
+  it("puts the assessment evidence workflow first on home", async () => {
     renderRoute("/");
-    expect(await screen.findByRole("heading", { name: "สวัสดี ครูสมชาย" })).toBeInTheDocument();
-    expect(screen.getAllByRole("link", { name: /งานเอกสาร/ }).some((link) => link.getAttribute("href") === "/documents")).toBe(true);
-    expect(screen.getAllByRole("link", { name: /สร้างข้อสอบ/ }).some((link) => link.getAttribute("href") === "/assessments")).toBe(true);
+    expect(await screen.findByRole("heading", { name: "หลักฐานการประเมิน พร้อมใช้" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /เปิดศูนย์หลักฐาน/ })).toHaveAttribute("href", "/evidence");
+    expect(screen.getByRole("link", { name: /สร้างการประเมิน/ })).toHaveAttribute("href", "/assessments");
+    expect(screen.getByRole("link", { name: /เตรียม PA/ })).toHaveAttribute("href", "/evidence");
   });
 
   it("searches the document catalog and parses a prompt into an editable document", async () => {
     renderRoute("/documents");
-    expect(await screen.findByRole("heading", { name: "งานเอกสาร" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "ส่งออกเอกสาร" })).toHaveAttribute("href", "/exports");
+    expect(await screen.findByRole("heading", { name: "เอกสารราชการทั่วไป" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "ไปยังหลักฐานการประเมิน" })).toHaveAttribute("href", "/evidence");
     fireEvent.change(screen.getByPlaceholderText("ค้นหาแบบฟอร์ม"), { target: { value: "แข่งขัน" } });
     expect(screen.getByText("ชุดเอกสารนำนักเรียนไปแข่งขันนอกสถานที่")).toBeInTheDocument();
     fireEvent.click(screen.getByRole("link", { name: /ชุดเอกสารนำนักเรียนไปแข่งขันนอกสถานที่/ }));
@@ -206,11 +208,18 @@ describe("core routed workflows", () => {
     ).toHaveAttribute("href", "/remedial/STU001");
   });
 
-  it("renders canonical export evidence and the PA/CAR preview", async () => {
-    renderRoute("/exports");
+  it.each(["/evidence", "/exports"])("renders the evidence hub at %s", async (path) => {
+    renderRoute(path);
     expect(
-      await screen.findByRole("heading", { name: "ส่งออกเอกสารครู" }),
+      await screen.findByRole("heading", { name: "ศูนย์หลักฐานการประเมิน" }),
     ).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "PA" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: /CAR/ })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "ปพ.5" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "เปิดแฟ้ม PA" })).toHaveAttribute("href", "/print/pa-car");
+    expect(screen.getByRole("link", { name: "เปิดแฟ้ม CAR" })).toHaveAttribute("href", "/print/pa-car");
+    expect(screen.getAllByRole("link", { name: /ดาวน์โหลด ปพ.5/ })[0]).toHaveAttribute("href", expect.stringContaining("exports/teacheros-pp5-demo.xlsx"));
+    expect(screen.getByRole("link", { name: /เอกสารราชการทั่วไป/ })).toHaveAttribute("href", "/documents");
     expect(screen.getByText("5→8")).toBeInTheDocument();
     expect(screen.getAllByText("66.7%").length).toBeGreaterThan(0);
     expect(screen.getByText("12→12")).toBeInTheDocument();
