@@ -1,7 +1,6 @@
 import {
   FileText,
   Files,
-  GraduationCap,
   Home,
   LayoutDashboard,
   UserRound,
@@ -49,8 +48,11 @@ export function AppShell() {
   return (
     <div className="shell">
       <aside className="sidebar">
-        <Link className="brand" to="/">
-          <GraduationCap aria-hidden="true" />
+        <Link aria-label="TeacherOS" className="brand" to="/">
+          <span className="brand-emblem" aria-hidden="true">
+            <i />
+            <i />
+          </span>
           <span className="brand-label">TeacherOS</span>
         </Link>
         <nav aria-label="เมนูหลัก">
@@ -59,6 +61,7 @@ export function AppShell() {
             const groupActive = item.activeOn(location.pathname);
             return (
               <Link
+                aria-label={item.label}
                 aria-current={groupActive ? "page" : undefined}
                 className={groupActive ? "active" : undefined}
                 to={item.to}
